@@ -19,34 +19,50 @@ public class EmployeeController {
     @GetMapping("/employee/name/{id}")
     public ResponseEntity<GenericResponse<String>> getEmployeeName(@PathVariable("id") Long id){
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .header("custome-header", "123")
                 .body(GenericResponse.success(employeeService.getEmployeeName(id)," Get Name successfully."));
     }
 
     @GetMapping("/employee")
-    public GenericResponse<List<Employee>> getAllEmployee(){
-        return GenericResponse.success(employeeService.getAllEmployee());
+    public ResponseEntity<GenericResponse<List<Employee>>> getAllEmployee(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header("custome-header", "value")
+                .body(GenericResponse.success(employeeService.getAllEmployee()," Get all employee successfully."));
+
     }
 
     @GetMapping("/employee/{id}")
-    public Employee getEmployeeById(@PathVariable("id") Long id){
-        return employeeService.getEmployeeById(id);
+    public ResponseEntity<GenericResponse<Employee>> getEmployeeById(@PathVariable("id") Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header("custome-header", "value")
+                .body(GenericResponse.success(employeeService.getEmployeeById(id)," Get employee successfully."));
     }
 
     @PostMapping("/employee")
-    public Employee addEmployee(@RequestBody Employee employee){
-        return employeeService.addEmployee(employee);
+    public ResponseEntity<GenericResponse<Employee>> addEmployee(@RequestBody Employee employee){
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .header("custome-header", "value")
+                .body(GenericResponse.success(employeeService.addEmployee(employee),"Created employee successfully."));
     }
 
     @PutMapping("/employee/{id}")
-    public Employee updateEmployee(@PathVariable("id") Long id, @RequestBody Employee employee){
-        return employeeService.updateEmployee(id, employee);
+    public ResponseEntity<GenericResponse<Employee>> updateEmployee(@PathVariable("id") Long id, @RequestBody Employee employee){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header("custome-header", "value")
+                .body(GenericResponse.success(employeeService.updateEmployee(id, employee),"Updated employee successfully."));
     }
 
     @DeleteMapping("/employee/{id}")
-    public Employee deleteEmployee(@PathVariable("id") Long id){
-        return employeeService.deleteEmployee(id);
+    public ResponseEntity<GenericResponse<Employee>> deleteEmployee(@PathVariable("id") Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header("custome-header", "value")
+                .body(GenericResponse.success(employeeService.deleteEmployee(id),"Deleted employee successfully."));
     }
 
 }
