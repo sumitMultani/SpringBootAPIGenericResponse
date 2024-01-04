@@ -5,6 +5,8 @@ import com.gainjavaknowledge.springBootGenericResponseExample.mapper.EmployeeMap
 import com.gainjavaknowledge.springBootGenericResponseExample.model.Employee;
 import com.gainjavaknowledge.springBootGenericResponseExample.repository.EmployeeRepository;
 import com.gainjavaknowledge.springBootGenericResponseExample.service.EmployeeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
+
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -26,6 +30,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployee() {
+        LOGGER.info("Inside EmployeeServiceImpl getAllEmployee method.");
+
+        try{
+            throw new RuntimeException("Error message");
+        }catch (Exception ex){
+            LOGGER.error("Error due to RunTimeException message : "+ex.getMessage());
+        }
         List<EmployeeEntity> employees = employeeRepository.findAll();
         List<Employee> employeeResponse = new ArrayList<>();
         if(!CollectionUtils.isEmpty(employees)){
@@ -38,12 +49,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(Employee employee) {
+        LOGGER.info("Inside EmployeeServiceImpl addEmployee method.");
         EmployeeEntity empEntity = employeeRepository.save(employeeMapper.getEmployeeEntityFromModel(employee));
         return employeeMapper.getEmployeeModelFromEntity(empEntity);
     }
 
     @Override
     public Employee getEmployeeById(Long id) {
+        LOGGER.info("Inside EmployeeServiceImpl getEmployeeById method.");
         Optional<EmployeeEntity> empOpt = employeeRepository.findById(id);
         if(empOpt.isPresent())
               return employeeMapper.getEmployeeModelFromEntity(empOpt.get());
@@ -52,6 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployee(Long id, Employee employee) {
+        LOGGER.info("Inside EmployeeServiceImpl updateEmployee method.");
         Optional<EmployeeEntity> empOpt = employeeRepository.findById(id);
         if(empOpt.isPresent()) {
             EmployeeEntity empEntity = empOpt.get();
@@ -71,6 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee deleteEmployee(Long id) {
+        LOGGER.info("Inside EmployeeServiceImpl deleteEmployee method.");
         Optional<EmployeeEntity> empOpt = employeeRepository.findById(id);
         if(empOpt.isPresent())
             return employeeMapper.getEmployeeModelFromEntity(empOpt.get());
@@ -79,6 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String getEmployeeName(Long id) {
+        LOGGER.info("Inside EmployeeServiceImpl getEmployeeName method.");
         Optional<EmployeeEntity> empOpt = employeeRepository.findById(id);
         if(empOpt.isPresent())
             return empOpt.get().getName();
