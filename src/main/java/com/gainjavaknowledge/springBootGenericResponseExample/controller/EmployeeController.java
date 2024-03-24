@@ -32,7 +32,7 @@ public class EmployeeController {
 
     @GetMapping("/employee")
     public ResponseEntity<GenericResponse<List<Employee>>> getAllEmployee(){
-        LOGGER.info("Inside EmployeeController getAllEmployee method.");
+        LOGGER.info("START ==> LOG 1 : Inside EmployeeController getAllEmployee method.");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .header("custome-header", "value")

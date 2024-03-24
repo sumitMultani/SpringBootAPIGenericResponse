@@ -31,19 +31,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmployee() {
         LOGGER.info("Inside EmployeeServiceImpl getAllEmployee method.");
-
         try{
-            throw new RuntimeException("Error message");
+            Thread.sleep(5000);
         }catch (Exception ex){
-            LOGGER.error("Error due to RunTimeException message : "+ex.getMessage());
+            LOGGER.error("Exception occurred");
         }
         List<EmployeeEntity> employees = employeeRepository.findAll();
         List<Employee> employeeResponse = new ArrayList<>();
         if(!CollectionUtils.isEmpty(employees)){
+            LOGGER.info("Inside EmployeeServiceImpl getAllEmployee is not empty.");
             employeeResponse = employees.stream()
                     .map(emp -> new Employee(emp.getId(), emp.getName(), emp.getAge(),emp.getSalary(), emp.getAddress()))
                     .collect(Collectors.toList());
         }
+        LOGGER.info("END ===>Inside EmployeeServiceImpl getAllEmployee executed Successfully. ");
         return employeeResponse;
     }
 
